@@ -107,6 +107,7 @@ Delivery: ₦${deliveryFee.toLocaleString()}
 ${formData.notes ? `*Additional Notes:* ${formData.notes}` : ""}`;
 
       const whatsappUrl = `https://wa.me/2348093958707?text=${encodeURIComponent(message)}`;
+      // const whatsappUrl = `https://wa.me/2348062670715?text=${encodeURIComponent(message)}`;
 
       setIsSubmitting(false);
       setOrderPlaced(true);
