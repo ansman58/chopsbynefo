@@ -13,6 +13,13 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  experimental: {
+    optimizePackageImports: ["lucide-react", "@sanity/client"],
+  },
+  compiler: {
+    removeConsole: process.env.NODE_ENV === "production",
+  },
+  serverExternalPackages: ["sanity"],
 };
 
 export default nextConfig;

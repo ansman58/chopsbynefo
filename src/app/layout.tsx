@@ -1,16 +1,11 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
 import ClientLayout from "@/components/ClientLayout";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
@@ -18,10 +13,27 @@ export const metadata: Metadata = {
   title: "Chops by Nefo | Premium Pastries & Catering Services",
   description: "Delicious pastries, cakes, banana bread, zobo drinks, and professional indoor & outdoor catering services. The Delight is in the Taste!",
   keywords: ["pastries", "cakes", "catering", "banana bread", "zobo", "small chops", "Lagos", "Nigeria"],
+  metadataBase: new URL("https://chopsbynefo.javanslem.workers.dev"),
   openGraph: {
     title: "Chops by Nefo | Premium Pastries & Catering Services",
     description: "Delicious pastries, cakes, banana bread, zobo drinks, and professional catering services.",
     type: "website",
+    url: "https://chopsbynefo.javanslem.workers.dev",
+    siteName: "Chops by Nefo",
+    images: [
+      {
+        url: "/logo.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Chops by Nefo - The Delight is in the Taste",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Chops by Nefo | Premium Pastries & Catering Services",
+    description: "Delicious pastries, cakes, banana bread, zobo drinks, and professional catering services.",
+    images: ["/logo.jpg"],
   },
 };
 
@@ -33,7 +45,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${inter.variable} antialiased font-sans`}
       >
         <CartProvider>
           <ClientLayout>{children}</ClientLayout>

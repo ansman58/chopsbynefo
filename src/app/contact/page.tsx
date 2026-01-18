@@ -1,6 +1,17 @@
 import Image from "next/image";
 import { Phone, Clock } from "lucide-react";
 import { WhatsAppIcon, InstagramIcon } from "@/components/icons";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Contact Us | Chops by Nefo",
+  description: "Get in touch with Chops by Nefo for orders, catering inquiries, or custom requests. Available on WhatsApp, Phone, and Instagram.",
+  openGraph: {
+    title: "Contact Us | Chops by Nefo",
+    description: "Get in touch with Chops by Nefo for orders, catering inquiries, or custom requests.",
+    images: ["/logo.jpg"],
+  },
+};
 
 export default function ContactPage() {
   return (
