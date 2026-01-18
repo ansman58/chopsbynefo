@@ -35,7 +35,8 @@ export interface SanityProduct {
   slug: { current: string };
   description: string;
   price: number;
-  image: SanityImageSource;
+  image?: SanityImageSource;
+  imageUrl?: string;
   category: {
     _ref: string;
     name?: string;
@@ -108,6 +109,7 @@ export const queries = {
     description,
     price,
     image,
+    imageUrl,
     "category": category->name,
     "categorySlug": category->slug.current,
     featured,
@@ -122,6 +124,7 @@ export const queries = {
     description,
     price,
     image,
+    imageUrl,
     "category": category->name,
     featured
   }`,
@@ -134,6 +137,7 @@ export const queries = {
     description,
     price,
     image,
+    imageUrl,
     "category": category->name,
     featured
   }`,

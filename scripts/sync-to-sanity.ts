@@ -97,6 +97,7 @@ async function syncProducts(categoryIds: Record<string, string>) {
       slug: { _type: "slug", current: slug },
       description: product.description,
       price: product.price,
+      imageUrl: product.image, 
       category: {
         _type: "reference",
         _ref: categoryId,

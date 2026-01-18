@@ -24,22 +24,31 @@ export default function MenuPage() {
   useEffect(() => {
     async function fetchData() {
       try {
-        // Try to fetch from Sanity
         const [sanityProducts, sanityCategories] = await Promise.all([
           getProducts(),
           getCategories()
         ]);
 
         if (sanityProducts && sanityProducts.length > 0) {
-          // Transform Sanity products to match our format
-          const transformedProducts: Product[] = sanityProducts.map((p: SanityProduct) => ({
-            id: p._id,
-            name: p.name,
-            description: p.description,
-            price: p.price,
-            image: p.image ? urlFor(p.image).width(400).height(300).url() : "/products/placeholder.svg",
-            category: typeof p.category === "string" ? p.category : p.category?.name || "Other",
-          }));
+          const transformedProducts: Product[] = sanityProducts.map((p: SanityProduct) => {
+            let imageUrl = "/products/placeholder.svg";
+            if (p.imageUrl) {
+              // External URL stored in imageUrl field
+              imageUrl = p.imageUrl;
+            } else if (p.image && typeof p.image === "object" && "asset" in p.image) {
+              // Sanity image object
+              imageUrl = urlFor(p.image).width(400).height(300).url();
+            }
+            
+            return {
+              id: p._id,
+              name: p.name,
+              description: p.description,
+              price: p.price,
+              image: imageUrl,
+              category: typeof p.category === "string" ? p.category : p.category?.name || "Other",
+            };
+          });
           setProducts(transformedProducts);
 
           // Transform categories

@@ -42,6 +42,12 @@ const product = defineType({
       },
     }),
     defineField({
+      name: "imageUrl",
+      title: "Image URL (External)",
+      type: "url",
+      description: "Use this for external image URLs (Unsplash, etc.)",
+    }),
+    defineField({
       name: "category",
       title: "Category",
       type: "reference",

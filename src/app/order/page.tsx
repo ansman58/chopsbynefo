@@ -1,11 +1,65 @@
 "use client";
 
-import { useState } from "react";
-import { products, categories } from "@/data/products";
+import { useState, useEffect } from "react";
+import { products as staticProducts, categories as staticCategories } from "@/data/products";
 import ProductCard from "@/components/ProductCard";
+import { getProducts, getCategories, urlFor, type SanityProduct, type SanityCategory } from "@/lib/sanity";
+
+interface Product {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  image: string;
+  category: string;
+}
 
 export default function OrderPage() {
   const [activeCategory, setActiveCategory] = useState("All");
+  const [products, setProducts] = useState<Product[]>(staticProducts);
+  const [categories, setCategories] = useState<string[]>(staticCategories);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const [sanityProducts, sanityCategories] = await Promise.all([
+          getProducts(),
+          getCategories()
+        ]);
+
+        if (sanityProducts && sanityProducts.length > 0) {
+          const transformedProducts: Product[] = sanityProducts.map((p: SanityProduct) => {
+            let imageUrl = "/products/placeholder.svg";
+            if (p.imageUrl) {
+              imageUrl = p.imageUrl;
+            } else if (p.image && typeof p.image === "object" && "asset" in p.image) {
+              imageUrl = urlFor(p.image).width(400).height(300).url();
+            }
+            
+            return {
+              id: p._id,
+              name: p.name,
+              description: p.description,
+              price: p.price,
+              image: imageUrl,
+              category: typeof p.category === "string" ? p.category : p.category?.name || "Other",
+            };
+          });
+          setProducts(transformedProducts);
+
+          const categoryNames = ["All", ...sanityCategories.map((c: SanityCategory) => c.name)];
+          setCategories(categoryNames);
+        }
+      } catch (error) {
+        console.log("Using static data:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchData();
+  }, []);
 
   const filteredProducts = products.filter(
     (product) => activeCategory === "All" || product.category === activeCategory
@@ -58,22 +112,28 @@ export default function OrderPage() {
       </section>
 
       {/* Category Filters */}
-      <section className="py-6 bg-white border-b sticky top-20 z-20">
+      <section className="py-4 md:py-6 bg-white border-b sticky top-20 z-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap justify-center gap-2">
-            {categories.map((category) => (
-              <button
-                key={category}
-                onClick={() => setActiveCategory(category)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                  activeCategory === category
-                    ? "bg-primary text-white"
-                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                }`}
-              >
-                {category}
-              </button>
-            ))}
+          <div className="relative">
+            <div className="absolute left-0 top-0 bottom-0 w-6 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none md:hidden" />
+            <div className="absolute right-0 top-0 bottom-0 w-6 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none md:hidden" />
+            <div className="overflow-x-auto scrollbar-hide -mx-4 px-4">
+              <div className="flex gap-2 min-w-max justify-start md:justify-center px-2">
+                {categories.map((category) => (
+                  <button
+                    key={category}
+                    onClick={() => setActiveCategory(category)}
+                    className={`px-4 py-2 rounded-full text-sm font-medium transition-colors whitespace-nowrap ${
+                      activeCategory === category
+                        ? "bg-primary text-white"
+                        : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                    }`}
+                  >
+                    {category}
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -81,11 +141,18 @@ export default function OrderPage() {
       {/* Products */}
       <section className="py-12 bg-accent">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {loading ? (
+            <div className="text-center py-16">
+              <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+              <p className="text-gray-600">Loading products...</p>
+            </div>
+          ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filteredProducts.map((product) => (
               <ProductCard key={product.id} {...product} />
             ))}
           </div>
+          )}
         </div>
       </section>
 
