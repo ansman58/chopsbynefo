@@ -1,64 +1,65 @@
-// Sanity schema for Site Settings
-export default {
+import { defineType, defineField } from "sanity";
+
+const siteSettings = defineType({
   name: "siteSettings",
   title: "Site Settings",
   type: "document",
   fields: [
-    {
+    defineField({
       name: "businessName",
       title: "Business Name",
       type: "string",
-      validation: (Rule: any) => Rule.required(),
-    },
-    {
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: "tagline",
       title: "Tagline",
       type: "string",
-    },
-    {
+    }),
+    defineField({
       name: "description",
       title: "Site Description",
       type: "text",
       rows: 3,
       description: "Used for SEO and meta descriptions",
-    },
-    {
+    }),
+    defineField({
       name: "logo",
       title: "Logo",
       type: "image",
       options: {
         hotspot: true,
       },
-    },
-    {
+    }),
+    defineField({
       name: "whatsappNumber",
       title: "WhatsApp Number",
       type: "string",
       description: "Include country code, e.g., +2348093958707",
-    },
-    {
+    }),
+    defineField({
       name: "phoneNumber",
       title: "Phone Number",
       type: "string",
-    },
-    {
+    }),
+    defineField({
       name: "instagramHandle",
       title: "Instagram Handle",
       type: "string",
       description: "Without the @ symbol",
-    },
-    {
+    }),
+    defineField({
       name: "email",
       title: "Email Address",
       type: "string",
-    },
-    {
+    }),
+    defineField({
       name: "address",
       title: "Business Address",
       type: "text",
       rows: 2,
-    },
-    {
+    }),
+    defineField({
       name: "businessHours",
       title: "Business Hours",
       type: "object",
@@ -79,8 +80,8 @@ export default {
           type: "string",
         },
       ],
-    },
-    {
+    }),
+    defineField({
       name: "bankDetails",
       title: "Bank Details",
       type: "object",
@@ -102,14 +103,14 @@ export default {
           type: "string",
         },
       ],
-    },
-    {
+    }),
+    defineField({
       name: "deliveryFee",
       title: "Delivery Fee (₦)",
       type: "number",
       description: "Standard delivery fee",
       initialValue: 1500,
-    },
+    }),
   ],
   preview: {
     select: {
@@ -118,4 +119,6 @@ export default {
       media: "logo",
     },
   },
-};
+});
+
+export default siteSettings;

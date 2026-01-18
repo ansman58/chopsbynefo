@@ -14,13 +14,13 @@ export default function OrderPage() {
   return (
     <div className="min-h-screen pt-20">
       {/* Hero */}
-      <section className="bg-gradient-to-r from-primary to-primary-dark py-12">
+      <section className="bg-linear-to-r from-primary to-primary-dark py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
             Place Your Order
           </h1>
           <p className="text-xl text-gray-200 max-w-2xl mx-auto">
-            Select your favorite items and add them to your cart. We'll deliver fresh to your doorstep!
+            Select your favorite items and add them to your cart. We&apos;ll deliver fresh to your doorstep!
           </p>
         </div>
       </section>

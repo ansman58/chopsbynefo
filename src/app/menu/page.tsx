@@ -75,7 +75,7 @@ export default function MenuPage() {
   return (
     <div className="min-h-screen pt-20">
       {/* Hero */}
-      <section className="bg-gradient-to-r from-primary to-primary-dark py-16">
+      <section className="bg-linear-to-r from-primary to-primary-dark py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
             Our Menu
@@ -184,10 +184,10 @@ export default function MenuPage() {
       <section className="py-16 bg-primary">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold text-white mb-4">
-            Can't find what you're looking for?
+            Can&apos;t find what you&apos;re looking for?
           </h2>
           <p className="text-gray-200 mb-8">
-            Contact us for custom orders and special requests. We'll be happy to help!
+            Contact us for custom orders and special requests. We&apos;ll be happy to help!
           </p>
           <a
             href="https://wa.me/2348093958707"

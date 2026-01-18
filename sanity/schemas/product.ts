@@ -1,16 +1,17 @@
-// Sanity schema for Product
-export default {
+import { defineType, defineField } from "sanity";
+
+const product = defineType({
   name: "product",
   title: "Product",
   type: "document",
   fields: [
-    {
+    defineField({
       name: "name",
       title: "Name",
       type: "string",
-      validation: (Rule: any) => Rule.required(),
-    },
-    {
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: "slug",
       title: "Slug",
       type: "slug",
@@ -18,49 +19,49 @@ export default {
         source: "name",
         maxLength: 96,
       },
-      validation: (Rule: any) => Rule.required(),
-    },
-    {
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: "description",
       title: "Description",
       type: "text",
       rows: 3,
-    },
-    {
+    }),
+    defineField({
       name: "price",
       title: "Price (₦)",
       type: "number",
-      validation: (Rule: any) => Rule.required().positive(),
-    },
-    {
+      validation: (Rule) => Rule.required().positive(),
+    }),
+    defineField({
       name: "image",
       title: "Product Image",
       type: "image",
       options: {
         hotspot: true,
       },
-    },
-    {
+    }),
+    defineField({
       name: "category",
       title: "Category",
       type: "reference",
       to: [{ type: "category" }],
-      validation: (Rule: any) => Rule.required(),
-    },
-    {
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: "featured",
       title: "Featured Product",
       type: "boolean",
       description: "Show this product on the homepage",
       initialValue: false,
-    },
-    {
+    }),
+    defineField({
       name: "available",
       title: "Available",
       type: "boolean",
       description: "Is this product currently available?",
       initialValue: true,
-    },
+    }),
   ],
   preview: {
     select: {
@@ -68,7 +69,7 @@ export default {
       subtitle: "price",
       media: "image",
     },
-    prepare(selection: { title: string; subtitle: number; media: any }) {
+    prepare(selection) {
       const { title, subtitle, media } = selection;
       return {
         title,
@@ -77,4 +78,6 @@ export default {
       };
     },
   },
-};
+});
+
+export default product;

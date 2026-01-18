@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import { createContext, useContext, useState, useEffect, useRef, ReactNode } from "react";
 
 interface CartItem {
   id: string;
@@ -23,24 +23,29 @@ interface CartContextType {
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: ReactNode }) {
-  const [cart, setCart] = useState<CartItem[]>([]);
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  // Load cart from localStorage on mount
-  useEffect(() => {
-    const savedCart = localStorage.getItem("chopsbynefo-cart");
-    if (savedCart) {
-      setCart(JSON.parse(savedCart));
+  const [cart, setCart] = useState<CartItem[]>(() => {
+    if (typeof window !== "undefined") {
+      const savedCart = localStorage.getItem("chopsbynefo-cart");
+      if (savedCart) {
+        try {
+          return JSON.parse(savedCart);
+        } catch {
+          return [];
+        }
+      }
     }
-    setIsLoaded(true);
-  }, []);
+    return [];
+  });
+  
+  const isInitialMount = useRef(true);
 
-  // Save cart to localStorage whenever it changes
   useEffect(() => {
-    if (isLoaded) {
-      localStorage.setItem("chopsbynefo-cart", JSON.stringify(cart));
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
     }
-  }, [cart, isLoaded]);
+    localStorage.setItem("chopsbynefo-cart", JSON.stringify(cart));
+  }, [cart]);
 
   const addToCart = (item: CartItem) => {
     setCart((prevCart) => {

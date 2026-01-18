@@ -1,16 +1,17 @@
-// Sanity schema for Service
-export default {
+import { defineType, defineField } from "sanity";
+
+const service = defineType({
   name: "service",
   title: "Catering Service",
   type: "document",
   fields: [
-    {
+    defineField({
       name: "title",
       title: "Title",
       type: "string",
-      validation: (Rule: any) => Rule.required(),
-    },
-    {
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: "slug",
       title: "Slug",
       type: "slug",
@@ -18,36 +19,36 @@ export default {
         source: "title",
         maxLength: 96,
       },
-      validation: (Rule: any) => Rule.required(),
-    },
-    {
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: "description",
       title: "Description",
       type: "text",
       rows: 3,
-    },
-    {
+    }),
+    defineField({
       name: "features",
       title: "Features",
       type: "array",
       of: [{ type: "string" }],
       description: "List of features included in this service",
-    },
-    {
+    }),
+    defineField({
       name: "startingPrice",
       title: "Starting Price (₦)",
       type: "number",
       description: "Minimum price for this service",
-      validation: (Rule: any) => Rule.positive(),
-    },
-    {
+      validation: (Rule) => Rule.positive(),
+    }),
+    defineField({
       name: "image",
       title: "Service Image",
       type: "image",
       options: {
         hotspot: true,
       },
-    },
+    }),
   ],
   preview: {
     select: {
@@ -55,7 +56,7 @@ export default {
       subtitle: "startingPrice",
       media: "image",
     },
-    prepare(selection: { title: string; subtitle: number; media: any }) {
+    prepare(selection) {
       const { title, subtitle, media } = selection;
       return {
         title,
@@ -64,4 +65,6 @@ export default {
       };
     },
   },
-};
+});
+
+export default service;

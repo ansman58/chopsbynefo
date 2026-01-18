@@ -1,16 +1,17 @@
-// Sanity schema for Category
-export default {
+import { defineType, defineField } from "sanity";
+
+const category = defineType({
   name: "category",
   title: "Category",
   type: "document",
   fields: [
-    {
+    defineField({
       name: "name",
       title: "Name",
       type: "string",
-      validation: (Rule: any) => Rule.required(),
-    },
-    {
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: "slug",
       title: "Slug",
       type: "slug",
@@ -18,21 +19,21 @@ export default {
         source: "name",
         maxLength: 96,
       },
-      validation: (Rule: any) => Rule.required(),
-    },
-    {
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: "description",
       title: "Description",
       type: "text",
       rows: 2,
-    },
-    {
+    }),
+    defineField({
       name: "order",
       title: "Display Order",
       type: "number",
       description: "Order in which categories appear (lower numbers first)",
       initialValue: 0,
-    },
+    }),
   ],
   preview: {
     select: {
@@ -40,4 +41,6 @@ export default {
       subtitle: "description",
     },
   },
-};
+});
+
+export default category;

@@ -1,11 +1,11 @@
-import Link from "next/link";
+// Link import removed - not currently used
 import { services } from "@/data/products";
 
 export default function ServicesPage() {
   return (
     <div className="min-h-screen pt-20">
       {/* Hero */}
-      <section className="bg-gradient-to-r from-primary to-primary-dark py-16">
+      <section className="bg-linear-to-r from-primary to-primary-dark py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
             Our Services
@@ -25,7 +25,7 @@ export default function ServicesPage() {
                 key={service.id}
                 className="bg-accent rounded-2xl overflow-hidden shadow-lg"
               >
-                <div className="h-64 bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
+                <div className="h-64 bg-linear-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
                   <div className="w-24 h-24 bg-primary rounded-full flex items-center justify-center">
                     {service.id === "indoor-catering" ? (
                       <svg
@@ -64,13 +64,13 @@ export default function ServicesPage() {
                   </h2>
                   <p className="text-gray-600 mb-6">{service.description}</p>
                   <h3 className="font-semibold text-gray-800 mb-3">
-                    What's Included:
+                    What&apos;s Included:
                   </h3>
                   <ul className="space-y-2 mb-6">
                     {service.features.map((feature, index) => (
                       <li key={index} className="flex items-center gap-2">
                         <svg
-                          className="w-5 h-5 text-secondary flex-shrink-0"
+                          className="w-5 h-5 text-secondary shrink-0"
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
@@ -270,7 +270,7 @@ export default function ServicesPage() {
             Ready to Book Your Event?
           </h2>
           <p className="text-gray-200 mb-8">
-            Contact us today to discuss your catering needs. We'd love to be part of your special day!
+            Contact us today to discuss your catering needs. We&apos;d love to be part of your special day!
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a

@@ -38,7 +38,6 @@ export default function CheckoutPage() {
     setIsSubmitting(true);
 
     try {
-      // Prepare order items for Supabase
       const orderItems = cart.map((item) => ({
         product_id: item.id,
         product_name: item.name,
@@ -47,7 +46,6 @@ export default function CheckoutPage() {
         image: item.image,
       }));
 
-      // Create order in Supabase
       const orderData: Omit<Order, "id" | "created_at"> = {
         customer_name: formData.fullName,
         customer_email: formData.email,
@@ -65,10 +63,8 @@ export default function CheckoutPage() {
         status: "pending",
       };
 
-      // Try to save to Supabase (will fail silently if not configured)
       try {
         await createOrder(orderData);
-        // Save customer info
         if (formData.email) {
           await createOrUpdateCustomer({
             name: formData.fullName,
@@ -77,12 +73,10 @@ export default function CheckoutPage() {
             addresses: [formData.address + ", " + formData.city],
           });
         }
-      } catch (supabaseError) {
-        // Log error but continue with WhatsApp
+      } catch {
         console.log("Supabase not configured, continuing with WhatsApp order");
       }
 
-      // Create order summary for WhatsApp
       const whatsappItems = cart
         .map((item) => `• ${item.name} x${item.quantity} - ₦${(item.price * item.quantity).toLocaleString()}`)
         .join("\n");
@@ -188,7 +182,7 @@ ${formData.notes ? `*Additional Notes:* ${formData.notes}` : ""}`;
   return (
     <div className="min-h-screen pt-20 bg-accent">
       {/* Hero */}
-      <section className="bg-gradient-to-r from-primary to-primary-dark py-8">
+      <section className="bg-linear-to-r from-primary to-primary-dark py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
             Checkout
@@ -410,7 +404,7 @@ ${formData.notes ? `*Additional Notes:* ${formData.notes}` : ""}`;
               <div className="space-y-4 max-h-80 overflow-y-auto mb-6">
                 {cart.map((item) => (
                   <div key={item.id} className="flex gap-4">
-                    <div className="relative w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 bg-gray-100">
+                    <div className="relative w-20 h-20 rounded-lg overflow-hidden shrink-0 bg-gray-100">
                       <Image
                         src={item.image}
                         alt={item.name}

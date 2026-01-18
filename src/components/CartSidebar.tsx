@@ -78,7 +78,7 @@ export default function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
                     key={item.id}
                     className="flex gap-4 bg-gray-50 rounded-lg p-3"
                   >
-                    <div className="relative w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
+                    <div className="relative w-20 h-20 rounded-lg overflow-hidden shrink-0">
                       <Image
                         src={item.image}
                         alt={item.name}

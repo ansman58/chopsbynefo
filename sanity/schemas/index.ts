@@ -1,4 +1,3 @@
-// Export all schemas
 import product from "./product";
 import category from "./category";
 import service from "./service";
