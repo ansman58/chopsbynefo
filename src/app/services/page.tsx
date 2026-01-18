@@ -68,7 +68,7 @@ export default function ServicesPage() {
                       </p>
                     </div>
                     <a
-                      href="https://wa.me/2348093958707"
+                      href="https://wa.me/2348168968952"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="bg-secondary text-white px-6 py-3 rounded-full font-medium hover:bg-secondary-light transition-colors"
@@ -154,7 +154,7 @@ export default function ServicesPage() {
                 ))}
               </ul>
               <a
-                href="https://wa.me/2348093958707?text=Hi%2C%20I'm%20interested%20in%20the%20Basic%20Catering%20Package"
+                href="https://wa.me/2348168968952?text=Hi%2C%20I'm%20interested%20in%20the%20Basic%20Catering%20Package"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block w-full bg-gray-100 text-primary py-3 rounded-full font-medium text-center hover:bg-gray-200 transition-colors"
@@ -188,7 +188,7 @@ export default function ServicesPage() {
                 ))}
               </ul>
               <a
-                href="https://wa.me/2348093958707?text=Hi%2C%20I'm%20interested%20in%20the%20Premium%20Catering%20Package"
+                href="https://wa.me/2348168968952?text=Hi%2C%20I'm%20interested%20in%20the%20Premium%20Catering%20Package"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block w-full bg-secondary text-white py-3 rounded-full font-medium text-center hover:bg-secondary-light transition-colors"
@@ -220,7 +220,7 @@ export default function ServicesPage() {
                 ))}
               </ul>
               <a
-                href="https://wa.me/2348093958707?text=Hi%2C%20I'm%20interested%20in%20the%20Deluxe%20Catering%20Package"
+                href="https://wa.me/2348168968952?text=Hi%2C%20I'm%20interested%20in%20the%20Deluxe%20Catering%20Package"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block w-full bg-gray-100 text-primary py-3 rounded-full font-medium text-center hover:bg-gray-200 transition-colors"
@@ -243,7 +243,7 @@ export default function ServicesPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="https://wa.me/2348093958707"
+              href="https://wa.me/2348168968952"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 bg-secondary text-white px-8 py-4 rounded-full font-semibold hover:bg-secondary-light transition-colors"

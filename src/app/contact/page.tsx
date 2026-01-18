@@ -196,7 +196,7 @@ export default function ContactPage() {
                 <p className="text-center text-sm text-gray-500">
                   Or reach us directly on{" "}
                   <a
-                    href="https://wa.me/2348093958707"
+                    href="https://wa.me/2348168968952"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-green-600 hover:underline font-medium"

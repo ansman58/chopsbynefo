@@ -119,7 +119,7 @@ export default function MenuPage() {
             Contact us for custom orders and special requests. We&apos;ll be happy to help!
           </p>
           <a
-            href="https://wa.me/2348093958707"
+            href="https://wa.me/2348168968952"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 bg-secondary text-white px-8 py-3 rounded-full font-medium hover:bg-secondary-light transition-colors"

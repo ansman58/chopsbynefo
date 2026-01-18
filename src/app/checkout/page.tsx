@@ -106,7 +106,7 @@ Delivery: ₦${deliveryFee.toLocaleString()}
 
 ${formData.notes ? `*Additional Notes:* ${formData.notes}` : ""}`;
 
-      const whatsappUrl = `https://wa.me/2348093958707?text=${encodeURIComponent(message)}`;
+      const whatsappUrl = `https://wa.me/2348168968952?text=${encodeURIComponent(message)}`;
 
       setIsSubmitting(false);
       setOrderPlaced(true);
@@ -134,7 +134,7 @@ ${formData.notes ? `*Additional Notes:* ${formData.notes}` : ""}`;
             </p>
             <div className="space-y-3">
               <a
-                href="https://wa.me/2348093958707"
+                href="https://wa.me/2348168968952"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block w-full bg-primary text-white py-3 rounded-full font-medium hover:bg-primary-dark transition-colors"

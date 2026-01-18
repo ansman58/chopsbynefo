@@ -245,7 +245,7 @@ export default function Home() {
               Place Your Order
             </Link>
             <a
-              href="https://wa.me/2348093958707"
+              href="https://wa.me/2348168968952"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-primary text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-primary-dark transition-colors flex items-center justify-center gap-2"
