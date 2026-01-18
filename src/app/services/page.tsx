@@ -1,49 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Image from "next/image";
-import { services as staticServices } from "@/data/products";
-import { getServices, urlFor, type SanityService } from "@/lib/sanity";
-
-interface Service {
-  id: string;
-  title: string;
-  description: string;
-  features: string[];
-  startingPrice: number;
-  image: string;
-}
+import { useServices } from "@/lib/queries";
 
 export default function ServicesPage() {
-  const [services, setServices] = useState<Service[]>(staticServices);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function fetchServices() {
-      try {
-        const sanityServices = await getServices();
-        
-        if (sanityServices && sanityServices.length > 0) {
-          const transformedServices: Service[] = sanityServices.map((s: SanityService) => ({
-            id: s._id,
-            title: s.title,
-            description: s.description,
-            features: s.features || [],
-            startingPrice: s.startingPrice,
-            image: s.image ? urlFor(s.image).width(600).height(400).url() : "/services/placeholder.svg",
-          }));
-          setServices(transformedServices);
-        }
-      } catch (error) {
-        console.error("Error fetching services from Sanity:", error);
-        // Keep static data on error
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchServices();
-  }, []);
+  const { data: services = [], isLoading: loading } = useServices();
 
   return (
     <div className="min-h-screen pt-20">

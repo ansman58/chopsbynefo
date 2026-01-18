@@ -1,65 +1,16 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { products as staticProducts, categories as staticCategories } from "@/data/products";
+import { useState } from "react";
 import ProductCard from "@/components/ProductCard";
-import { getProducts, getCategories, urlFor, type SanityProduct, type SanityCategory } from "@/lib/sanity";
-
-interface Product {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  image: string;
-  category: string;
-}
+import { useProducts, useCategories } from "@/lib/queries";
 
 export default function OrderPage() {
   const [activeCategory, setActiveCategory] = useState("All");
-  const [products, setProducts] = useState<Product[]>(staticProducts);
-  const [categories, setCategories] = useState<string[]>(staticCategories);
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const [sanityProducts, sanityCategories] = await Promise.all([
-          getProducts(),
-          getCategories()
-        ]);
+  const { data: products = [], isLoading: productsLoading } = useProducts();
+  const { data: categories = ["All"], isLoading: categoriesLoading } = useCategories();
 
-        if (sanityProducts && sanityProducts.length > 0) {
-          const transformedProducts: Product[] = sanityProducts.map((p: SanityProduct) => {
-            let imageUrl = "/products/placeholder.svg";
-            if (p.imageUrl) {
-              imageUrl = p.imageUrl;
-            } else if (p.image && typeof p.image === "object" && "asset" in p.image) {
-              imageUrl = urlFor(p.image).width(400).height(300).url();
-            }
-            
-            return {
-              id: p._id,
-              name: p.name,
-              description: p.description,
-              price: p.price,
-              image: imageUrl,
-              category: typeof p.category === "string" ? p.category : p.category?.name || "Other",
-            };
-          });
-          setProducts(transformedProducts);
-
-          const categoryNames = ["All", ...sanityCategories.map((c: SanityCategory) => c.name)];
-          setCategories(categoryNames);
-        }
-      } catch (error) {
-        console.log("Using static data:", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchData();
-  }, []);
+  const loading = productsLoading || categoriesLoading;
 
   const filteredProducts = products.filter(
     (product) => activeCategory === "All" || product.category === activeCategory
@@ -115,8 +66,8 @@ export default function OrderPage() {
       <section className="py-4 md:py-6 bg-white border-b sticky top-20 z-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="relative">
-            <div className="absolute left-0 top-0 bottom-0 w-6 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none md:hidden" />
-            <div className="absolute right-0 top-0 bottom-0 w-6 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none md:hidden" />
+            <div className="absolute left-0 top-0 bottom-0 w-6 bg-linear-to-r from-white to-transparent z-10 pointer-events-none md:hidden" />
+            <div className="absolute right-0 top-0 bottom-0 w-6 bg-linear-to-l from-white to-transparent z-10 pointer-events-none md:hidden" />
             <div className="overflow-x-auto scrollbar-hide -mx-4 px-4">
               <div className="flex gap-2 min-w-max justify-start md:justify-center px-2">
                 {categories.map((category) => (

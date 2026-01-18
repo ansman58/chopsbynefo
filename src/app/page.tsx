@@ -3,85 +3,23 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { products as staticProducts } from "@/data/products";
 import ProductCard from "@/components/ProductCard";
-import { getFeaturedProducts, getTestimonials, urlFor, type SanityProduct, type SanityTestimonial } from "@/lib/sanity";
-
-interface Product {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  image: string;
-  category: string;
-}
-
-interface Testimonial {
-  name: string;
-  text: string;
-  event: string;
-}
+import { useFeaturedProducts, useTestimonials } from "@/lib/queries";
 
 export default function Home() {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
-  const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
-  const [testimonials, setTestimonials] = useState<Testimonial[]>([
-    {
-      name: "Chioma A.",
-      text: "The small chops at my daughter's birthday were amazing! Everyone kept asking for more. Chops by Nefo never disappoints!",
-      event: "Birthday Party",
-    },
-    {
-      name: "Emmanuel O.",
-      text: "Best banana bread in town! I order weekly and it's always fresh and delicious. Highly recommended!",
-      event: "Regular Customer",
-    },
-    {
-      name: "Blessing N.",
-      text: "They catered my wedding and everything was perfect. The food was delicious and the service was professional.",
-      event: "Wedding",
-    },
-  ]);
 
+  const { data: featuredProducts = [] } = useFeaturedProducts();
+  const { data: testimonials = [] } = useTestimonials();
+
+  // Auto-rotate testimonials
   useEffect(() => {
-    async function fetchData() {
-      try {
-        // Try to fetch from Sanity
-        const [sanityProducts, sanityTestimonials] = await Promise.all([
-          getFeaturedProducts(),
-          getTestimonials()
-        ]);
-
-        if (sanityProducts && sanityProducts.length > 0) {
-          const transformedProducts: Product[] = sanityProducts.map((p: SanityProduct) => ({
-            id: p._id,
-            name: p.name,
-            description: p.description,
-            price: p.price,
-            image: p.image ? urlFor(p.image).width(400).height(300).url() : "/products/placeholder.svg",
-            category: typeof p.category === "string" ? p.category : p.category?.name || "Other",
-          }));
-          setFeaturedProducts(transformedProducts);
-        } else {
-          setFeaturedProducts(staticProducts.slice(0, 4));
-        }
-
-        if (sanityTestimonials && sanityTestimonials.length > 0) {
-          const transformedTestimonials: Testimonial[] = sanityTestimonials.map((t: SanityTestimonial) => ({
-            name: t.name,
-            text: t.text,
-            event: t.event,
-          }));
-          setTestimonials(transformedTestimonials);
-        }
-      } catch (error) {
-        console.log("Sanity not configured, using static data:", error);
-        setFeaturedProducts(staticProducts.slice(0, 4));
-      }
-    }
-
-    fetchData();
-  }, []);
+    if (testimonials.length === 0) return;
+    const interval = setInterval(() => {
+      setActiveTestimonial((prev) => (prev + 1) % testimonials.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [testimonials.length]);
 
   return (
     <div className="min-h-screen">
@@ -144,7 +82,7 @@ export default function Home() {
               Our Services
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              From delicious pastries to full-scale catering, we've got everything 
+              From delicious pastries to full-scale catering, we&apos;ve got everything 
               you need to make your events memorable.
             </p>
           </div>
