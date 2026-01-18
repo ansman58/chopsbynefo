@@ -3,9 +3,11 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   const navLinks = [
     { href: "/", label: "Home" },
@@ -14,6 +16,13 @@ export default function Header() {
     { href: "/order", label: "Order Now" },
     { href: "/contact", label: "Contact" },
   ];
+
+  const isActive = (href: string) => {
+    if (href === "/") {
+      return pathname === "/";
+    }
+    return pathname.startsWith(href);
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-md">
@@ -43,6 +52,8 @@ export default function Header() {
                 className={`text-sm font-medium transition-colors hover:text-secondary ${
                   link.label === "Order Now"
                     ? "bg-primary text-white px-5 py-2.5 rounded-full hover:bg-primary-dark hover:text-white"
+                    : isActive(link.href)
+                    ? "text-secondary border-b-2 border-secondary pb-1"
                     : "text-gray-700"
                 }`}
               >
@@ -92,6 +103,8 @@ export default function Header() {
                 className={`block py-3 px-4 text-sm font-medium transition-colors ${
                   link.label === "Order Now"
                     ? "bg-primary text-white rounded-lg mx-4 my-2 text-center"
+                    : isActive(link.href)
+                    ? "text-secondary bg-secondary/10"
                     : "text-gray-700 hover:bg-gray-50"
                 }`}
                 onClick={() => setIsMenuOpen(false)}

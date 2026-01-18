@@ -7,8 +7,12 @@
  * Get one from: https://www.sanity.io/manage → Project → API → Tokens → Add API token (Editor permissions)
  */
 
+import { config } from "dotenv";
 import { createClient } from "@sanity/client";
 import { products, categories, services } from "../src/data/products";
+
+// Load environment variables from .env.local
+config({ path: ".env.local" });
 
 // Sanity client with write access
 const client = createClient({

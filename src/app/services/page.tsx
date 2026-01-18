@@ -1,8 +1,50 @@
-// Link import removed - not currently used
+"use client";
+
+import { useState, useEffect } from "react";
 import Image from "next/image";
-import { services } from "@/data/products";
+import { services as staticServices } from "@/data/products";
+import { getServices, urlFor, type SanityService } from "@/lib/sanity";
+
+interface Service {
+  id: string;
+  title: string;
+  description: string;
+  features: string[];
+  startingPrice: number;
+  image: string;
+}
 
 export default function ServicesPage() {
+  const [services, setServices] = useState<Service[]>(staticServices);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchServices() {
+      try {
+        const sanityServices = await getServices();
+        
+        if (sanityServices && sanityServices.length > 0) {
+          const transformedServices: Service[] = sanityServices.map((s: SanityService) => ({
+            id: s._id,
+            title: s.title,
+            description: s.description,
+            features: s.features || [],
+            startingPrice: s.startingPrice,
+            image: s.image ? urlFor(s.image).width(600).height(400).url() : "/services/placeholder.svg",
+          }));
+          setServices(transformedServices);
+        }
+      } catch (error) {
+        console.error("Error fetching services from Sanity:", error);
+        // Keep static data on error
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchServices();
+  }, []);
+
   return (
     <div className="min-h-screen pt-20">
       {/* Hero */}
@@ -20,6 +62,11 @@ export default function ServicesPage() {
       {/* Services */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {loading ? (
+            <div className="flex justify-center items-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+            </div>
+          ) : (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {services.map((service) => (
               <div
@@ -82,6 +129,7 @@ export default function ServicesPage() {
               </div>
             ))}
           </div>
+          )}
         </div>
       </section>
 
