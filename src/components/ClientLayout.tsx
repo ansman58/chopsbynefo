@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { usePathname } from "next/navigation";
 import CartSidebar from "./CartSidebar";
 import FloatingCartButton from "./FloatingCartButton";
 import Header from "./Header";
@@ -14,14 +13,6 @@ export default function ClientLayout({
   children: React.ReactNode;
 }) {
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const pathname = usePathname();
-  
-  // Don't show Header/Footer on studio routes
-  const isStudioRoute = pathname?.startsWith("/studio");
-
-  if (isStudioRoute) {
-    return <>{children}</>;
-  }
 
   return (
     <QueryProvider>
