@@ -1,6 +1,7 @@
 import { defineConfig } from "sanity";
 import { structureTool } from "sanity/structure";
 import { schemaTypes } from "./sanity/schemas";
+import StudioNavbar from "./sanity/components/StudioNavbar";
 
 export default defineConfig({
   name: "chops-by-nefo",
@@ -15,5 +16,11 @@ export default defineConfig({
 
   schema: {
     types: schemaTypes,
+  },
+
+  studio: {
+    components: {
+      navbar: StudioNavbar,
+    },
   },
 });
