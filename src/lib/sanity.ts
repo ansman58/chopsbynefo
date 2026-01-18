@@ -2,7 +2,6 @@ import { createClient } from "next-sanity";
 import imageUrlBuilder from "@sanity/image-url";
 import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
 
-// Check if Sanity is configured
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "";
 const isConfigured = projectId && projectId !== "your_sanity_project_id" && /^[a-z0-9-]+$/.test(projectId);
 
@@ -13,10 +12,8 @@ export const sanityConfig = {
   useCdn: process.env.NODE_ENV === "production",
 };
 
-// Only create real client if configured
 export const sanityClient = isConfigured ? createClient(sanityConfig) : null;
 
-// Image URL builder (only if configured)
 const builder = isConfigured && sanityClient ? imageUrlBuilder(sanityClient) : null;
 
 export function urlFor(source: SanityImageSource) {
@@ -26,7 +23,6 @@ export function urlFor(source: SanityImageSource) {
   return builder.image(source);
 }
 
-// Check if Sanity is available
 export function isSanityConfigured() {
   return isConfigured;
 }
