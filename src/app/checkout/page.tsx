@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { Check, ShoppingCart, Loader2 } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { createOrder, createOrUpdateCustomer, type Order } from "@/lib/supabase";
 
@@ -125,9 +126,7 @@ ${formData.notes ? `*Additional Notes:* ${formData.notes}` : ""}`;
         <div className="max-w-md mx-auto px-4 text-center">
           <div className="bg-white rounded-2xl p-8 shadow-lg">
             <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-              <svg className="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
+              <Check className="w-10 h-10 text-green-500" />
             </div>
             <h1 className="text-2xl font-bold text-gray-800 mb-4">Order Submitted!</h1>
             <p className="text-gray-600 mb-6">
@@ -160,9 +159,7 @@ ${formData.notes ? `*Additional Notes:* ${formData.notes}` : ""}`;
       <div className="min-h-screen pt-20 flex items-center justify-center bg-accent">
         <div className="max-w-md mx-auto px-4 text-center">
           <div className="bg-white rounded-2xl p-8 shadow-lg">
-            <svg className="w-20 h-20 text-gray-300 mx-auto mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-            </svg>
+            <ShoppingCart className="w-20 h-20 text-gray-300 mx-auto mb-6" strokeWidth={1.5} />
             <h1 className="text-2xl font-bold text-gray-800 mb-4">Your Cart is Empty</h1>
             <p className="text-gray-600 mb-6">
               Add some delicious items to your cart before checking out.
@@ -380,10 +377,7 @@ ${formData.notes ? `*Additional Notes:* ${formData.notes}` : ""}`;
               >
                 {isSubmitting ? (
                   <>
-                    <svg className="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-                    </svg>
+                    <Loader2 className="animate-spin w-5 h-5" />
                     Processing...
                   </>
                 ) : (
